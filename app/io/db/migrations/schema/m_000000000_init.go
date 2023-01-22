@@ -3,6 +3,7 @@ package schema
 
 import (
 	"github.com/dimonrus/godb/v2"
+	"github.com/dimonrus/gomodel"
 	"tutorial/app/base"
 )
 
@@ -17,7 +18,7 @@ func (m m_000000000_init) GetVersion() string {
 }
 
 func (m m_000000000_init) Up(tx *godb.SqlTx) error {
-	return nil
+	return gomodel.CreateDictionaryTable(tx)
 }
 
 func (m m_000000000_init) Down(tx *godb.SqlTx) error {

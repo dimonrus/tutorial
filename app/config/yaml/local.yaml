@@ -8,7 +8,7 @@ db:
 rabbit:
   servers:
     local:
-      host: rabbitmq
+      host: 0.0.0.0
       vhost: \
       port: 5672
       user: tutorial

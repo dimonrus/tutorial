@@ -13,3 +13,5 @@ rabbit:
       port: 5672
       user: tutorial
       password: admin
+web:
+  port: 8081

@@ -25,6 +25,12 @@ rabbit:
       routingKey:
         - tutorial-test-message
       durable: true
+    tutorial.event:
+      exchange: amq.direct
+      type: direct
+      routingKey:
+        - tutorial-event
+      durable: true
 arguments:
   app:
     type: string

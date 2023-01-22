@@ -1,0 +1,15 @@
+depends: global
+db:
+  host: postgres
+  port: 5432
+  name: tutorial
+  user: tutorial
+  password: tutorial
+rabbit:
+  servers:
+    local:
+      host: rabbitmq
+      vhost: \
+      port: 5672
+      user: tutorial
+      password: admin

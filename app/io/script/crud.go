@@ -1,0 +1,32 @@
+// script file
+package script
+
+import (
+	"errors"
+	"github.com/dimonrus/gocli"
+	"github.com/dimonrus/gomodel"
+	"tutorial/app/base"
+	"strings"
+)
+
+func init() {
+	base.App.GetScripts()["crud"] = func(args gocli.Arguments) {
+		schema := "public"
+		table := args["file"].GetString()
+		if table == "" {
+			base.App.FatalError(errors.New("table name is empty"))
+		}
+		if strings.Contains(table, ".") {
+			names := strings.Split(table, ".")
+			schema = names[0]
+			table = names[1]
+		}
+		db := base.App.GetDB()
+		db.Debug = false
+		crud := gomodel.NewCRUDGenerator("app/core", "app/client", "app/io/web/api", "tutorial")
+		err := crud.Generate(base.App.GetDB(), schema, table, "v1", gomodel.CrudNumber(args["num"].GetInt()))
+		if err != nil {
+			base.App.FatalError(err)
+		}
+	}
+}

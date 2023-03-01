@@ -53,3 +53,6 @@ arguments:
   num:
     type: int
     label: number of something
+  color:
+    type: string
+    label: custom parameter color

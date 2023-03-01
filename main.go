@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/dimonrus/gocli"
+	"github.com/dimonrus/gohelp"
 	"github.com/dimonrus/gorabbit"
 	"github.com/dimonrus/porterr"
 	"tutorial/app/base"
@@ -16,6 +17,7 @@ const (
 	ApplicationTypeWeb      = "web"
 	ApplicationTypeScript   = "script"
 	ApplicationTypeConsumer = "consumer"
+	ApplicationTypeColors   = "colors"
 )
 
 // RunWeb start web application
@@ -57,6 +59,27 @@ func RunConsumer() porterr.IError {
 	return e
 }
 
+func RunColors() porterr.IError {
+	return base.App.Start(":3333", func(command *gocli.Command) {
+		base.App.SuccessMessage("Receive command: " + command.String())
+		args := command.Arguments()
+		var action string
+		if len(args) > 0 {
+			if args[0].Name != "colors" {
+				base.App.FailMessage("Colors command must start with keyword 'colors'", command)
+				return
+			}
+			action = args[1].Name
+		}
+		switch action {
+		case "list":
+			base.App.SuccessMessage(gohelp.Rainbow("Every hunter wants to know where a pheasant sits", ' '), command)
+		default:
+			base.App.FailMessage("unknown action", command)
+		}
+	})
+}
+
 // Entry points for application
 func main() {
 	base.App.SuccessMessage("Application environment ENV=" + base.App.GetENV())
@@ -68,6 +91,8 @@ func main() {
 		e = RunScript()
 	case ApplicationTypeConsumer:
 		e = RunConsumer()
+	case ApplicationTypeColors:
+		e = RunColors()
 	default:
 		e = porterr.New(porterr.PortErrorParam, "app type is undefined")
 	}

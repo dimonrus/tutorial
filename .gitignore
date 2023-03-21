@@ -1,6 +1,6 @@
 .idea
 .DS_Store
-vendor
 tutorial
 swagger
+vendor
 resource/swagger.json

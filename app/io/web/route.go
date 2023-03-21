@@ -5,9 +5,10 @@ import (
 	"github.com/dimonrus/goweb"
 	"github.com/dimonrus/porterr"
 	"github.com/gorilla/mux"
+	"net/http"
 	"tutorial/app/base"
 	"tutorial/app/io/web/api/system"
-	"net/http"
+	utilsV1 "tutorial/app/io/web/utils/v1"
 )
 
 // ResponseError JSON Answer. Common error response
@@ -48,6 +49,17 @@ func GetRoutes() *mux.Router {
 
 	// System sub route
 	system.Init(ApiRoute)
+
+	// Add utils route
+	// /tutorial/utils
+	UtilsRoute := MainRoute.PathPrefix("/utils").Subrouter()
+
+	// Utils V1 sub route
+	// /tutorial/utils/v1
+	UtilsV1Route := UtilsRoute.PathPrefix("/v1").Subrouter()
+
+	// Utils route
+	utilsV1.Init(UtilsV1Route)
 
 	// Setup middleware
 	routes.Use(middleWare.LoggingMiddleware)
